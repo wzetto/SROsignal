@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: SROsignal
+Version: 0.1
+Summary: Extract ordering info. from the spatial/frequency domain of atomic signals.
+Home-page: https://github.com/wzetto/SROsignal
+Author: Zhi Wang
+Author-email: wang.zhi.48u@st.kyoto-u.ac.jp
+License: GPLv3
+License-File: LICENSE
+
+##### SRO_related
+
+Extract ordering info. from the spatial/frequency domain of atomic signals.
