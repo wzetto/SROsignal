@@ -1,0 +1,11 @@
+include srosignal/demo/polygon_recog.bmp
+include srosignal/demo/stem_binarythreshold.bmp
+include srosignal/demo/stem_raw.bmp
+include srosignal/demo/stem_binarythreshold_coords.npy
+include srosignal/demo/poly_definition.json
+
+include srosignal/demo/polygon_recog_inv.bmp
+include srosignal/demo/stem_binarythreshold_inv.bmp
+include srosignal/demo/stem_binarythreshold_coords_inv.npy
+include srosignal/demo/stem_all_coords_inv.npy
+include srosignal/demo/stem_all_inv.bmp
