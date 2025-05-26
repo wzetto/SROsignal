@@ -11,11 +11,12 @@ class polygon_recog:
                 stem_coords_all_pth = None,
                 polygon_type_list = ['tri37', 'tri53', 'tri127', 'tri143', 'square'],
                 inv_filter = False,
+                dup_remove_maxdis = 7,
                 mp_core = 1,
                 l_range = [10, 80],
                 max_lengthdiff = 3,
                 max_anglediff = 3,
-                #! append the supplementary polygon definition
+                #* polygon definition
                 polygon_def_dict = None, 
                 allow_dot_in_pattern = False,):
 
@@ -41,7 +42,7 @@ class polygon_recog:
         if polygon_type_list is None and polygon_def_dict is None:
             raise ValueError("Please provide the polygon type list or polygon definition dictionary.")
         
-        self.new_centre_list = utils.centre_list_gen(inv_filter, stem_coords_threshold_pth, stem_coords_all_pth)
+        self.new_centre_list = utils.centre_list_gen(inv_filter, stem_coords_threshold_pth, stem_coords_all_pth, dup_remove_maxdis)
         self.dis_matrix = utils.dis_mat_calc(mp_core, self.new_centre_list).mat_gen()
         self.img_raw = cv2.imread(img_raw_pth, cv2.IMREAD_GRAYSCALE)
         self.l_range = l_range

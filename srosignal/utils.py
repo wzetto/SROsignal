@@ -6,7 +6,7 @@ import multiprocessing as mp
 def dup_remove(centre_list_buffer, max_dis=9):
     
     ''' 
-    remove duplicated points that represents the same atom in STEM images
+    remove duplicated points that represent the same atom in STEM image
     '''
     
     x_res = centre_list_buffer[:,0]-centre_list_buffer[:,0].reshape(-1,1)
@@ -17,7 +17,7 @@ def dup_remove(centre_list_buffer, max_dis=9):
     
     return centre_list_buffer
 
-def centre_list_gen(inv_filter, coord_threshold, coord_all=None):
+def centre_list_gen(inv_filter, coord_threshold, coord_all=None, dup_remove_maxdis=7):
 
     if inv_filter:
         #* Special treatment: get the null space of the centroids matrix.
@@ -25,18 +25,18 @@ def centre_list_gen(inv_filter, coord_threshold, coord_all=None):
         cent_filt = np.load(coord_threshold)[:,-2:]
 
         delete_ind = []
-        #! need vectorized
+
         for i in range(len(cent_all)):
             dis_min = np.min(np.linalg.norm(cent_filt-cent_all[i], axis=1))
             if dis_min < 8:
                 delete_ind.append(i)
                 
-        new_centre_list = dup_remove(np.delete(cent_all, np.array(delete_ind), axis=0), max_dis = 7)
+        new_centre_list = dup_remove(np.delete(cent_all, np.array(delete_ind), axis=0), max_dis = dup_remove_maxdis)
         
     elif not inv_filter:
         cent_filt = np.load(coord_threshold)[:,-2:]
         
-        new_centre_list = dup_remove(cent_filt, max_dis = 7)
+        new_centre_list = dup_remove(cent_filt, max_dis = dup_remove_maxdis)
         
     return new_centre_list
 
@@ -73,7 +73,7 @@ def dot_in_tri(tri_coord, dot_, tol_angle=-1e-2, tol_dis=1e-3):
     if proj_len_3 < tol_dis and np.min([t2x, t3x]) < dot[0] < np.max([t2x, t3x]) and np.min([t2y, t3y]) < dot[1] < np.max([t2y, t3y]):
         return True
     
-    #TODO determine the threshold for inner product
+    #* threshold for inner product
     elif np.min([inner_dot_t1, inner_dot_t2, inner_dot_t3]) > tol_angle:
         return True
     else:
@@ -81,7 +81,7 @@ def dot_in_tri(tri_coord, dot_, tol_angle=-1e-2, tol_dis=1e-3):
 
 def c2_dot(dot, vec_vertices):
     ''' 
-    return v' which is the dot after C2 operation
+    return dot after C2 rotation
     '''
     v1, v2 = vec_vertices
     dot_c2 = v2 - (dot-v1)
@@ -118,24 +118,6 @@ class dis_mat_calc:
         dis_matrix[self.combinatorial_ind[:,0], self.combinatorial_ind[:,1]] = dis_list_raw
         
         return dis_matrix
-        
-# def dis_mat_calc(mp_core, new_centre_list):
-
-#     def main(i):
-#         i1, i2 = combinatorial_ind[i]
-#         dis = np.linalg.norm(new_centre_list[i1]-new_centre_list[i2])
-#         return dis
-    
-#     global combinatorial_ind
-#     combinatorial_ind = np.array(list(product(range(len(new_centre_list)), repeat=2)))
-
-#     with mp.Pool(mp_core) as p:
-#         dis_list_raw = np.array(p.map(main, range(combinatorial_ind.shape[0])))
-
-#     dis_matrix = np.zeros((len(new_centre_list), len(new_centre_list)))
-#     dis_matrix[combinatorial_ind[:,0], combinatorial_ind[:,1]] = dis_list_raw
-
-#     return dis_matrix
 
 def grid_prepare(l_range, img, new_centre_list):
     

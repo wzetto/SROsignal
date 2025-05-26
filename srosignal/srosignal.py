@@ -8,11 +8,12 @@ def poly_extract(
     stem_coords_all_pth = None,
     polygon_type_list = ['tri37', 'tri53', 'tri127', 'tri143', 'square'],
     inv_filter = False,
+    dup_remove_maxdis = 7,
     mp_core = 1,
     l_range = [10, 80],
     max_lengthdiff = 3,
     max_anglediff = 3,
-    #! append the supplementary polygon definition
+    #* polygon definition
     poly_def = None,
     allow_dot_in_pattern = False,
     
@@ -27,7 +28,8 @@ def poly_extract(
     
     polygon_recog = poly_connect.polygon_recog(
         img_raw_pth, stem_coords_threshold_pth, stem_coords_all_pth,
-        polygon_type_list, inv_filter, mp_core, l_range, max_lengthdiff,
+        polygon_type_list, inv_filter, dup_remove_maxdis, 
+        mp_core, l_range, max_lengthdiff,
         max_anglediff, poly_def, allow_dot_in_pattern)
     
     polygon_info_dict = polygon_recog.recog_main()

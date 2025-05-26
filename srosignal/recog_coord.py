@@ -103,7 +103,7 @@ class extract:
             img.shape[0], 0, img.shape[1], 0
         for _ in range(100): 
             p_searchmat = np.clip(
-                #TODO determine the search area
+                #* define the search area
                 np.array([raw_p+np.array([i,j]) for i in range(-1,2) for j in range(-1,2)]),
                 0, np.array(img.shape)-1 #* what's the optimized search area
             )
