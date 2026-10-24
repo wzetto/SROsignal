@@ -8,7 +8,7 @@ setup(
     license='GPLv3',
     description='Extract ordering info. from the spatial/frequency domain of atomic signals.',
     long_description=open('README.md').read(),
-    install_requires=['numpy', 'opencv-python', 'matplotlib', 'pickle', 'scikit-learn', 'json'],
+    install_requires=['numpy', 'opencv-python', 'matplotlib', 'scikit-learn'],
     url='https://github.com/wzetto/SROsignal',
     author='Zhi Wang',
     author_email='wang.zhi.48u@st.kyoto-u.ac.jp',
